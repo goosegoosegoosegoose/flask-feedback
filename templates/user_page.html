@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-dark">
+    {{msg}}
+</div>
+{% endfor %}
+<h1 class="display-1">{{user.username}}</h1>
+{% endblock %}
+
+{% block content %}
+<p class="lead">
+    <span class="my-2"><b>Name:</b> {{user.first_name}} {{user.last_name}}</span><br>
+    <span class="my-2"><b>Email:</b> {{user.email}}</span>
+</p>
+<hr><br>
+<h3 class="display-5">Feedback</h3>
+{% for fb in feedback %}
+<div class="card my-3">
+    <div class="card-body">
+        <h5 class="card-title">{{fb.title}}</h5>
+        <p class="card-text">{{fb.content}}</p>
+        {% if session["user"] == fb.user %}
+        <form action="/feedback/{{fb.id}}/delete" method="POST">
+            <a href="/feedback/{{fb.id}}/update">
+                <button type="button" class="btn btn-success btn-sm">Edit</button>
+            </a>
+            <button class="btn btn-danger btn-sm">Delete</button>
+        </form>
+    {% endif %}
+    </div>
+</div>
+{% endfor %}
+<br>
+<a href='/logout'>
+    <button type="button" class="btn btn-warning">Logout</button>
+</a>
+{% if 'user' in session %}
+<a href='/users/{{user.username}}/feedback/add'>
+    <button type="button" class="btn btn-outline-info">Add Feedback</button>
+</a>
+{% endif %}
+
+<form action="/users/{{user.username}}/delete" method="POST">
+    <a href='/register'>
+        <button type="button" class="btn btn-primary my-4">Register New User</button>
+    </a>
+    {% if session["user"] == user.username %}
+    <button class="btn btn-danger">Delete User</button>
+    {% endif %}
+</form>
+
+{% endblock %}

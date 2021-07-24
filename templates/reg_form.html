@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}User Form{% endblock %}
+
+{% block header %}
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-dark">
+    {{msg}}
+</div>
+{% endfor %}
+<h1 class="display-1">Add User</h1><br>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <form action="/register" method="POST">
+            {{form.hidden_tag()}}
+            {% for field in form if field.widget.input_type != 'hidden' %}
+            <div class="form-group my-2">
+                {{field.label}}:
+                {{field(class_="form-control")}}
+
+                {% for err in field.errors %}
+                <small class="form-text text-danger">
+                    {{err}}
+                </small>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mb-4">Register user</button><br>
+            <a href='/login'>
+                <button type="button" class="btn btn-success">Login</button>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
