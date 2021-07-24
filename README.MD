@@ -1,0 +1,1 @@
+create, bcrypt, hash, authenticate. I kind of get classmethods now.

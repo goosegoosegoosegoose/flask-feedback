@@ -44,7 +44,7 @@ class User(db.Model):
             return False
 
 class Feedback(db.Model):
-    """More feedback?"""
+    """Feedback Table"""
 
     id=db.Column(db.Integer, primary_key=True, autoincrement=True)
     title=db.Column(db.String(100), nullable=False)
